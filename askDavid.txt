@@ -1,0 +1,2 @@
+1 - appliqué un scale pour réduire l'image
+2 - appliqué un reverse aux images
