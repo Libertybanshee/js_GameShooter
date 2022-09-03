@@ -9,21 +9,19 @@ function showFPS() {
     ctx.fillStyle = "White";
     ctx.font = "normal 16pt Arial";
 
-    ctx.fillText(Math.floor(fps) + " fps", 10, 20)
+    ctx.fillText(Math.floor(fps) + " fps", 10, 20);
 }
 
 function run(time) {
     requestAnimationFrame(run);
     let dt = (time - derniereUpdate) / 1000;
 
-    // limiter les FPS
     if (dt < (1 / 60) - 0.001) {
         return;
     }
 
-    fps = 1 / dt
+    fps = 1 / dt;
     derniereUpdate = time;
-    console.log("Run");
     update(dt);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw(ctx);
@@ -31,9 +29,13 @@ function run(time) {
 }
 
 function init() {
-    console.log("Init");
-    load()
+    ctx.imageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    load();
+    //interval = setInterval(run, 1000 / 60);
     requestAnimationFrame(run);
 }
 
-init()
+init();

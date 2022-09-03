@@ -1,86 +1,84 @@
-let img;
-let imgG;
-let timer;
-
-let KeyUp = false;
 let KeyRight = false;
-let KeyDown = false;
 let KeyLeft = false;
+let KeyUp = false;
+let KeyDown = false;
+
+let imageLoader = new ImageLoader();
+let gameReady = false;
+let lstSprites = [];
+
+function rnd(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 function toucheEnfoncee(t) {
     t.preventDefault();
-    if (t.code == "KeyW") {
-        KeyUp = true;
-    }
-
-    if (t.code == "KeyD") {
+    if (t.code == "ArrowRight") {
         KeyRight = true;
     }
-    
-    if (t.code == "KeyS") {
-        KeyDown = true;
+    if (t.code == "ArrowUp") {
+        KeyUp = true;
     }
-    
-    if (t.code == "KeyA") {
+    if (t.code == "ArrowLeft") {
         KeyLeft = true;
+    }
+    if (t.code == "ArrowDown") {
+        KeyDown = true;
     }
 }
 
 function toucheRelachee(t) {
     t.preventDefault();
-    if (t.code == "KeyW") {
-        KeyUp = false;
-    }
-
-    if (t.code == "KeyD") {
+    if (t.code == "ArrowRight") {
         KeyRight = false;
     }
-    
-    if (t.code == "KeyS") {
-        KeyDown = false;
+    if (t.code == "ArrowUp") {
+        KeyUp = false;
     }
-    
-    if (t.code == "KeyA") {
+    if (t.code == "ArrowLeft") {
         KeyLeft = false;
     }
-    
+    if (t.code == "ArrowDown") {
+        KeyDown = false;
+    }
 }
 
 function load() {
     document.addEventListener("keydown", toucheEnfoncee, false);
     document.addEventListener("keyup", toucheRelachee, false);
 
-    img = new Sprite("img/Hero/Hero1.png", 100, 100);
-    imgG = new Sprite("img/ennemiGreen/green1.png", 300, 300);
+    imageLoader.add("img/background/galaxy.png")
 
-    timer = 0;
+    imageLoader.start(startGame);
+}
+
+function startGame() {
+    console.log("StartGame");
+
+    lstSprites = [];
+
+    gameReady = true;
 }
 
 function update(dt) {
-    timer += dt;
-    if (timer >= 1) {
-        imgG.x++;
-        timer = 0;
+    if (!gameReady) {
+        return;
     }
-
-    if (KeyUp) {
-        img.y -= 10;
-    }
-
-    if (KeyRight) {
-        img.x += 10;
-    }
-
-    if (KeyDown) {
-        img.y += 10;
-    }
-
-    if (KeyLeft) {
-        img.x -= 10;
-    }
+    // Suite quand le jeu est prêt
 }
 
 function draw(pCtx) {
-    imgG.draw(pCtx)
-    img.draw(pCtx);
+    if (!gameReady) {
+        let ratio = imageLoader.getLoadedRatio();
+        pCtx.fillStyle = "rgb(255,255,255)";
+        pCtx.fillRect(1, 1, 400, 100);
+        pCtx.fillStyle = "rgb(0,255,0)";
+        pCtx.fillRect(1, 1, 400 * ratio, 100);
+        return;
+    }
+
+    // Suite quand le jeu est prêt
+    lstSprites.forEach(sprite => {
+        sprite.draw(pCtx);
+    });
 }
