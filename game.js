@@ -5,7 +5,8 @@ let KeyDown = false;
 
 let imageLoader = new ImageLoader();
 let gameReady = false;
-let lstSprites = [];
+
+let sceneJeu = new SceneJeu();
 
 function rnd(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -47,7 +48,7 @@ function load() {
     document.addEventListener("keydown", toucheEnfoncee, false);
     document.addEventListener("keyup", toucheRelachee, false);
 
-    imageLoader.add("img/background/galaxy.png")
+    imageLoader.add("images/background.png");
 
     imageLoader.start(startGame);
 }
@@ -57,6 +58,8 @@ function startGame() {
 
     lstSprites = [];
 
+    sceneJeu.load(imageLoader);
+
     gameReady = true;
 }
 
@@ -65,6 +68,7 @@ function update(dt) {
         return;
     }
     // Suite quand le jeu est prêt
+    sceneJeu.update(dt);
 }
 
 function draw(pCtx) {
@@ -77,8 +81,5 @@ function draw(pCtx) {
         return;
     }
 
-    // Suite quand le jeu est prêt
-    lstSprites.forEach(sprite => {
-        sprite.draw(pCtx);
-    });
+    sceneJeu.draw(pCtx);
 }
