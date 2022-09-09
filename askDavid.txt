@@ -1,2 +1,5 @@
 1 - appliqué un scale pour réduire l'image
 2 - appliqué un reverse aux images
+3 - appliqué un effet mirroir au image
+4 - placer le background avec un parametre Y
+5 - la commande pour fetch un repo de githubs
